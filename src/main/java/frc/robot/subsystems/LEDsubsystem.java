@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.ColorFlowAnimation;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,7 +18,9 @@ import frc.robot.Constants;
 
 public class LEDsubsystem extends SubsystemBase {
   /** Creates a new LEDsubsystem. */
-  public static CANdle led = new CANdle(Constants.ledport, "LED");
+  private final int LEDS_PER_ANIMATION = 30;
+  public static Animation animate = null;
+  public static CANdle led = new CANdle(Constants.ledport, "rio");
   public LEDsubsystem() {
     CANdleConfiguration configAll = new CANdleConfiguration();
     configAll.statusLedOffWhenActive = true;
@@ -26,12 +31,15 @@ public class LEDsubsystem extends SubsystemBase {
     led.configAllSettings(configAll, 100);
   }
 
-  public void turnledonoff(boolean status){
+  public void turnledonoff(Integer status){
 
-    if(status){
+    if(status == 0){
+      animate = new ColorFlowAnimation(128, 20, 70, 0, 0.7, LEDS_PER_ANIMATION, Direction.Forward, 0 * LEDS_PER_ANIMATION + 8);
+    }
+    else if(status ==1){
       led.setLEDs(255, 0, 0);
     }
-    else{
+    else if(status ==2){
       led.setLEDs(0, 0, 0);
     }
   }

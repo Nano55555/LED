@@ -26,10 +26,13 @@ public class LEDcommand extends CommandBase {
   @Override
   public void execute() {
     if(controller.getAButtonPressed()){
-      LEDsubsystem.turnledonoff(true);
+      LEDsubsystem.turnledonoff(0);
+    }
+    if(controller.getXButtonPressed()){
+      LEDsubsystem.turnledonoff(1);
     }
     else if(controller.getBButtonPressed()){
-      LEDsubsystem.turnledonoff(false);
+      LEDsubsystem.turnledonoff(2);
     }
   }
 
